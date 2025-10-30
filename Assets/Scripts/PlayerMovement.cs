@@ -39,9 +39,10 @@ public class PlayerMovement : MonoBehaviour
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 1f, groundLayer);
         return hit.collider != null;
-    }
-    void onAttack()
+    }   
+    void OnAttack()
     {
         rb.AddForce(new Vector2(0f, recoilForce), ForceMode2D.Impulse);
+        Debug.Log("Recoil applied");
     }
 }
