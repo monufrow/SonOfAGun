@@ -10,6 +10,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private LayerMask groundLayer;
     private Rigidbody2D rb;
+    Vector3 mouseWorldPos;
+    Vector2 mouseScreenPos;
+    public GameObject crosshair;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -20,12 +24,12 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        crosshair.transform.position = mouseScreenPos;
+        MouseMove();
     }
     void OnMove(InputValue value)
     {
         Vector2 movement = new Vector2(value.Get<Vector2>().x * moveSpeed, rb.linearVelocity.y);
-        
         rb.linearVelocity = movement;
     }
     void OnJump()
@@ -39,10 +43,23 @@ public class PlayerMovement : MonoBehaviour
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 1f, groundLayer);
         return hit.collider != null;
-    }   
+    }
     void OnAttack()
     {
-        rb.AddForce(new Vector2(0f, recoilForce), ForceMode2D.Impulse);
+        // Apply recoil
+        Vector3 direction = (mouseWorldPos - transform.position).normalized;
+        rb.AddForce(-direction * recoilForce, ForceMode2D.Impulse);
         Debug.Log("Recoil applied");
+    }
+    void MouseMove()
+    {
+        if (Mouse.current != null)
+        {
+            mouseScreenPos = Mouse.current.position.ReadValue();
+            mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, 0f));
+            mouseWorldPos.z = 0f;
+
+            crosshair.transform.position = mouseWorldPos;
+        }
     }
 }
