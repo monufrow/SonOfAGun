@@ -13,12 +13,16 @@ public class PlayerMovement : MonoBehaviour
     Vector3 mouseWorldPos;
     Vector2 mouseScreenPos;
     public GameObject crosshair;
+    [SerializeField] private Material playerMaterial;
+    SpriteRenderer spriteRenderer;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        playerMaterial = GetComponent<SpriteRenderer>().material;
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -61,5 +65,20 @@ public class PlayerMovement : MonoBehaviour
 
             crosshair.transform.position = mouseWorldPos;
         }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("Collided with Tumbleweed");
+            StartCoroutine(HitEffect());
+        }
+    }
+    IEnumerator HitEffect()
+    {
+        spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(0.2f);
+        spriteRenderer.color = Color.white;
     }
 }
