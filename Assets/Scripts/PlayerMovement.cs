@@ -15,6 +15,10 @@ public class PlayerMovement : MonoBehaviour
     public GameObject crosshair;
     [SerializeField] private Material playerMaterial;
     SpriteRenderer spriteRenderer;
+    public float shotDistance = 6f;
+    public int bulletCount = 3;
+    public float reloadTime = 2f;
+    private bool isReloading = false;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -50,10 +54,19 @@ public class PlayerMovement : MonoBehaviour
     }
     void OnAttack()
     {
+        while (!isReloading)
+        {
+            isReloading = true;
+            StartCoroutine(ReloadCoroutine());
+            Vector3 direction = (mouseWorldPos - transform.position).normalized;
+            rb.AddForce(-direction * recoilForce, ForceMode2D.Impulse);
+            ShootBullets(direction);
+        }
         // Apply recoil
-        Vector3 direction = (mouseWorldPos - transform.position).normalized;
-        rb.AddForce(-direction * recoilForce, ForceMode2D.Impulse);
-        Debug.Log("Recoil applied");
+        //Vector3 direction = (mouseWorldPos - transform.position).normalized;
+        //rb.AddForce(-direction * recoilForce, ForceMode2D.Impulse);
+        //ShootBullets(direction);
+        //Debug.Log("Recoil applied");
     }
     void MouseMove()
     {
@@ -80,5 +93,36 @@ public class PlayerMovement : MonoBehaviour
         spriteRenderer.color = Color.red;
         yield return new WaitForSeconds(0.2f);
         spriteRenderer.color = Color.white;
+    }
+
+    void ShootBullets(Vector3 direction)
+    {
+        Debug.Log("Shooting bullets");
+        for (int i = 0; i < bulletCount; i++)
+        {
+            Vector3 spreadDirection = Quaternion.AngleAxis(Random.Range(-10, 11), Vector3.forward) * direction;
+            Vector3 bulletOffset = new Vector3(0, Random.Range(-3, 4) * .05f, 0);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position + bulletOffset, spreadDirection, shotDistance, LayerMask.GetMask("Enemy"));
+            ShootBulletsDebug(spreadDirection, bulletOffset);
+            if (hit.collider != null)
+            {
+                Debug.Log("Bullet hit: " + hit.collider.name);
+                // Here you can add logic to deal damage to the hit object if it has a health component
+            }
+        }
+    }
+    void ShootBulletsDebug(Vector3 direction, Vector3 offset)
+    {
+        Debug.DrawRay(transform.position + offset, direction * shotDistance, Color.red, 2f, false);
+
+        //Debug.DrawRay(transform.position + new Vector3(0, .1f, 0), Quaternion.AngleAxis(Random.Range(-2, 11), Vector3.forward) * direction * shotDistance, Color.green, 2f, false);
+        //Debug.DrawRay(transform.position - new Vector3(0, .1f, 0), Quaternion.AngleAxis(Random.Range(-10, 3), Vector3.forward) * direction * shotDistance, Color.green, 2f, false);
+    }
+
+    IEnumerator ReloadCoroutine()
+    {
+        yield return new WaitForSeconds(reloadTime);
+        yield return null;
+        isReloading = false;
     }
 }
