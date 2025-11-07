@@ -35,8 +35,23 @@ public class PlayerMovement : MonoBehaviour
     {
         crosshair.transform.position = mouseScreenPos;
         MouseMove();
-        Vector2 movement = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
-        rb.linearVelocity = movement;
+        Vector2 targetVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
+        //if (rb.linearVelocity == Vector2.zero || rb.linearVelocity == targetVelocity)
+        // {
+        //     rb.linearVelocity = targetVelocity;
+        // }
+        // else
+        // {
+        //     rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, targetVelocity, 0.0075f);
+        // }
+        if (Mathf.Abs(rb.linearVelocity.x) > Mathf.Abs(targetVelocity.x))
+        {
+            rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, targetVelocity, 0.0075f);
+        }
+        else
+        {
+            rb.linearVelocity = targetVelocity;
+        }
     }
     void OnMove(InputValue value)
     {
@@ -56,11 +71,12 @@ public class PlayerMovement : MonoBehaviour
     }
     void OnAttack()
     {
-        while (!isReloading)
+        if (!isReloading)
         {
             isReloading = true;
             StartCoroutine(ReloadCoroutine());
             Vector3 direction = (mouseWorldPos - transform.position).normalized;
+            direction.x *= 2.5f;
             rb.AddForce(-direction * recoilForce, ForceMode2D.Impulse);
             ShootBullets(direction);
         }
