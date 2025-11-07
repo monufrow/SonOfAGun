@@ -46,7 +46,11 @@ public class PlayerMovement : MonoBehaviour
         // }
         if (Mathf.Abs(rb.linearVelocity.x) > Mathf.Abs(targetVelocity.x))
         {
-            rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, targetVelocity, 0.0075f);
+            // lerp wil interpolate between two vectors, when the float is closer to 0 it will
+            // prefer to stay closer to the first vector. This will bring the player back to walking speed over time.
+            // its kinda quick but this was the best option I found, either it instantly went back to walking speed, or the player slid too long.
+            // between 0.01 and 0.005 were good values I found.
+            rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, targetVelocity, 0.0075f); 
         }
         else
         {
