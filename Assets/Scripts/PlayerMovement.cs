@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     public int bulletCount = 3;
     public float reloadTime = 2f;
     private bool isReloading = false;
+    private Vector2 moveInput;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -34,11 +35,12 @@ public class PlayerMovement : MonoBehaviour
     {
         crosshair.transform.position = mouseScreenPos;
         MouseMove();
+        Vector2 movement = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
+        rb.linearVelocity = movement;
     }
     void OnMove(InputValue value)
     {
-        Vector2 movement = new Vector2(value.Get<Vector2>().x * moveSpeed, rb.linearVelocity.y);
-        rb.linearVelocity = movement;
+        moveInput = value.Get<Vector2>();
     }
     void OnJump()
     {
