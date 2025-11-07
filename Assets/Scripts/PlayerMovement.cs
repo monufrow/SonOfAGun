@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public float reloadTime = 2f;
     private bool isReloading = false;
     private Vector2 moveInput;
+    public Image reloadCircle;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -123,7 +125,17 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator ReloadCoroutine()
     {
-        yield return new WaitForSeconds(reloadTime);
+        //yield return new WaitForSeconds(reloadTime);
+        reloadCircle.gameObject.SetActive(true);
+        reloadCircle.fillAmount = 0f;
+        float elapsed = 0f;
+        while (elapsed < reloadTime)
+        {
+            elapsed += Time.deltaTime;
+            reloadCircle.fillAmount = elapsed / reloadTime;
+            yield return null;
+        }
+        reloadCircle.fillAmount = 0f;
         yield return null;
         isReloading = false;
     }
