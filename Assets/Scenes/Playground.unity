@@ -1592,6 +1592,9 @@ MonoBehaviour:
     m_Bits: 8
   crosshair: {fileID: 214414730}
   playerMaterial: {fileID: 0}
+  shotDistance: 6
+  bulletCount: 3
+  reloadTime: 2
 --- !u!50 &1505246013
 Rigidbody2D:
   serializedVersion: 5
@@ -2147,7 +2150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   tumbleweedPrefab: {fileID: 7573787010870594818, guid: 6975c018408b23349ac648fe4752ee6e, type: 3}
-  spawnInterval: 3
+  spawnInterval: 10
 --- !u!1 &1796678867
 GameObject:
   m_ObjectHideFlags: 0
