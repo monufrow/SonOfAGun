@@ -86,7 +86,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("Collided with Tumbleweed");
+            Debug.Log("Collided with Enemy");
+            StartCoroutine(HitEffect());
+        }
+        if (collision.gameObject.CompareTag("Cactus"))
+        {
+            Debug.Log("Collided with Cactus");
             StartCoroutine(HitEffect());
         }
     }
