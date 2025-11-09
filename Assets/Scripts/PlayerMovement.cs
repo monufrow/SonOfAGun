@@ -52,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
             // prefer to stay closer to the first vector. This will bring the player back to walking speed over time.
             // its kinda quick but this was the best option I found, either it instantly went back to walking speed, or the player slid too long.
             // between 0.01 and 0.005 were good values I found.
-            rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, targetVelocity, 0.0075f); 
+            rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, targetVelocity, 0.0075f);
         }
         else
         {
@@ -79,6 +79,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isReloading)
         {
+            Debug.Log("Shots fired");
             isReloading = true;
             StartCoroutine(ReloadCoroutine());
             Vector3 direction = (mouseWorldPos - transform.position).normalized;
@@ -150,7 +151,6 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator ReloadCoroutine()
     {
-        //yield return new WaitForSeconds(reloadTime);
         reloadCircle.gameObject.SetActive(true);
         reloadCircle.fillAmount = 0f;
         float elapsed = 0f;
