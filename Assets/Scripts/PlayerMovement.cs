@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 using UnityEngine.UI;
+using NUnit.Framework.Internal;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -151,17 +152,34 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator ReloadCoroutine()
     {
-        reloadCircle.gameObject.SetActive(true);
-        reloadCircle.fillAmount = 0f;
+        Debug.Log("Reloading...");
+
+        if (reloadCircle != null)
+        {
+            reloadCircle.gameObject.SetActive(true);
+            reloadCircle.fillAmount = 0f;
+        }
+
         float elapsed = 0f;
+
         while (elapsed < reloadTime)
         {
             elapsed += Time.deltaTime;
-            reloadCircle.fillAmount = elapsed / reloadTime;
+            if (reloadCircle != null)
+            {
+                reloadCircle.fillAmount = Mathf.Clamp01(elapsed / reloadTime);
+            }
+            Debug.Log("Reload progress: " + (elapsed / reloadTime));
             yield return null;
         }
-        reloadCircle.fillAmount = 0f;
-        yield return null;
+
+        if (reloadCircle != null)
+        {
+            reloadCircle.fillAmount = 0f;
+            reloadCircle.gameObject.SetActive(false);
+        }
+
         isReloading = false;
+        Debug.Log("Reload complete");
     }
 }

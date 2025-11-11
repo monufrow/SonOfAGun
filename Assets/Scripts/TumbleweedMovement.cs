@@ -47,21 +47,21 @@ public class TumbleweedMovement : MonoBehaviour
             {
                 rb.AddForce(Vector2.up * currentSpeed * bounceForce, ForceMode2D.Impulse);
                 bounceForce *= 0.9f;
-                Debug.Log("Tumbleweed bounced off ground");
+                //Debug.Log("Tumbleweed bounced off ground");
             }
             else
             {
-                Debug.Log("Tumbleweed bounced off object");
+                //Debug.Log("Tumbleweed bounced off object");
             }
         }
 
 
     }
-   
+
     IEnumerator DespawnAfterTime()
     {
         yield return new WaitForSeconds(lifetime);
         Destroy(gameObject);
     }
-   
+
 }

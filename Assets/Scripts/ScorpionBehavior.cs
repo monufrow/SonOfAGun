@@ -13,7 +13,7 @@ public class ScorpionBehavior : MonoBehaviour
     private bool isCharging = false;
     private bool canCharge = true;
     private Vector2 patrolDirection = Vector2.right;
-    
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -47,7 +47,7 @@ public class ScorpionBehavior : MonoBehaviour
         {
             Flip();
         }
-    } 
+    }
     void Flip()
     {
         patrolDirection = -patrolDirection;
