@@ -1467,6 +1467,33 @@ PlatformEffector2D:
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
+--- !u!1 &1215418508 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7537181822173416548, guid: 2fe7287fa2a8f534dbe809641b69e8bf, type: 3}
+  m_PrefabInstance: {fileID: 8903400953552621178}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1215418514
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1215418508}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8506f1a25b2f2b048a40b1fb4d594574, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1229850422
 GameObject:
   m_ObjectHideFlags: 0
@@ -1882,6 +1909,7 @@ MonoBehaviour:
   bulletCount: 3
   reloadTime: 2
   reloadCircle: {fileID: 1019469336}
+  lives: 3
 --- !u!50 &1505246013
 Rigidbody2D:
   serializedVersion: 5
@@ -3014,9 +3042,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4458523564833337098, guid: 2fe7287fa2a8f534dbe809641b69e8bf, type: 3}
+      propertyPath: m_Offset.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4753371916505730421, guid: 2fe7287fa2a8f534dbe809641b69e8bf, type: 3}
+      propertyPath: hitSprite
+      value: 
+      objectReference: {fileID: 6086493432050724043, guid: 846f4f136dbdaf8409865a863f83c99e, type: 3}
+    - target: {fileID: 4753371916505730421, guid: 2fe7287fa2a8f534dbe809641b69e8bf, type: 3}
+      propertyPath: deadSprite
+      value: 
+      objectReference: {fileID: 3411895702302891866, guid: 846f4f136dbdaf8409865a863f83c99e, type: 3}
+    - target: {fileID: 4753371916505730421, guid: 2fe7287fa2a8f534dbe809641b69e8bf, type: 3}
+      propertyPath: normalSprite
+      value: 
+      objectReference: {fileID: 5625128080202318772, guid: 846f4f136dbdaf8409865a863f83c99e, type: 3}
     - target: {fileID: 7537181822173416548, guid: 2fe7287fa2a8f534dbe809641b69e8bf, type: 3}
       propertyPath: m_Name
       value: Scorpion
+      objectReference: {fileID: 0}
+    - target: {fileID: 7537181822173416548, guid: 2fe7287fa2a8f534dbe809641b69e8bf, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8511237348649238936, guid: 2fe7287fa2a8f534dbe809641b69e8bf, type: 3}
+      propertyPath: m_Constraints
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9006927214789462639, guid: 2fe7287fa2a8f534dbe809641b69e8bf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3024,7 +3076,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9006927214789462639, guid: 2fe7287fa2a8f534dbe809641b69e8bf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.78
+      value: -3.79
       objectReference: {fileID: 0}
     - target: {fileID: 9006927214789462639, guid: 2fe7287fa2a8f534dbe809641b69e8bf, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3061,7 +3113,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7537181822173416548, guid: 2fe7287fa2a8f534dbe809641b69e8bf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1215418514}
   m_SourcePrefab: {fileID: 100100000, guid: 2fe7287fa2a8f534dbe809641b69e8bf, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
