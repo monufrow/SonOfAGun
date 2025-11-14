@@ -84,9 +84,10 @@ public class PlayerMovement : MonoBehaviour
             isReloading = true;
             StartCoroutine(ReloadCoroutine());
             Vector3 direction = (mouseWorldPos - transform.position).normalized;
+            ShootBullets(direction);
             direction.x *= 2.5f;
             rb.AddForce(-direction * recoilForce, ForceMode2D.Impulse);
-            ShootBullets(direction);
+
         }
         // Apply recoil
         //Vector3 direction = (mouseWorldPos - transform.position).normalized;
