@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
     public Image reloadCircle;
     public int lives = 3;
     private Vector3 startPosition;
-
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -174,12 +174,14 @@ public class PlayerMovement : MonoBehaviour
     void LoseLife()
     {
         lives--;
+        GameManager.Instance.LoseLife();
         Debug.Log("Player lost a life!");
         if (lives <= 0)
         {
             Debug.Log("Player has died!");
             transform.position = startPosition;
             lives = 3;
+            GameManager.Instance.RestoreLives();
         }
     }
 }

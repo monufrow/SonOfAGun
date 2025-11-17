@@ -20,6 +20,7 @@ public class ScorpionBehavior : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     private BoxCollider2D objectCollider;
+    private bool takingDamage = false;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -50,7 +51,7 @@ public class ScorpionBehavior : MonoBehaviour
 
     void Patrol()
     {
-        animator.ResetTrigger("Patrol");
+        
         rb.linearVelocity = new Vector2(patrolDirection.x * patrolSpeed, rb.linearVelocity.y);
         // Turn around logic, subject to change
         //      likely to cause problems in current state
@@ -70,7 +71,6 @@ public class ScorpionBehavior : MonoBehaviour
         //scale.x *= -1;
         //transform.localScale = scale;
         spriteRenderer.flipX = !spriteRenderer.flipX;   
-        Debug.Log("Scorpion flipped direction!");
     }
     IEnumerator Charge()
     {
@@ -91,7 +91,6 @@ public class ScorpionBehavior : MonoBehaviour
         isCharging = false;
         yield return new WaitForSeconds(chargeCooldown); // cooldown before next charge
         canCharge = true;
-        animator.ResetTrigger("Charge");
         animator.SetTrigger("Patrol");
     }
     void OnCollisionEnter2D(Collision2D collision)
@@ -99,6 +98,9 @@ public class ScorpionBehavior : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("Player hit by scorpion charge!");
+            if(!takingDamage){
+                gotShot(50f);
+            }
         }
         else
         {
@@ -124,14 +126,17 @@ public class ScorpionBehavior : MonoBehaviour
     }
     IEnumerator HitEffect()
     {
-        spriteRenderer.color = Color.red;
+        spriteRenderer.color = Color.blue;
+        takingDamage = true;
         yield return new WaitForSeconds(0.2f);
         spriteRenderer.color = Color.white;
+        takingDamage = false;
     }
     void Die()
     {
         animator.SetTrigger("Die");
         Debug.Log("Scorpion died!");
+        rb.gravityScale = 0f;
         Destroy(objectCollider);
         Destroy(gameObject, 1f);
     }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8511237348649238936}
   - component: {fileID: 4458523564833337098}
   - component: {fileID: 4753371916505730421}
-  - component: {fileID: 7184751388474270453}
+  - component: {fileID: 3540649790348825796}
   m_Layer: 7
   m_Name: Scorpion
   m_TagString: Enemy
@@ -155,10 +155,10 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.29}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.8, y: 0.57}
     newSize: {x: 0.8, y: 0.57}
     adaptiveTilingThreshold: 0.5
@@ -182,13 +182,13 @@ MonoBehaviour:
   health: 10
   patrolRange: 5
   patrolSpeed: 2
-  chargeSpeed: 5
+  chargeSpeed: 7
   detectionRange: 5
   chargeCooldown: 3
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
---- !u!95 &7184751388474270453
+--- !u!95 &3540649790348825796
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0
