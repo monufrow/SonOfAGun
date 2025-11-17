@@ -22,7 +22,9 @@ public class PlayerMovement : MonoBehaviour
     public float reloadTime = 2f;
     private bool isReloading = false;
     private Vector2 moveInput;
-    public Image reloadCircle;
+    //public Image reloadCircle;
+    public int lives = 3;
+    private Vector3 startPosition;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -31,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         playerMaterial = GetComponent<SpriteRenderer>().material;
         spriteRenderer = GetComponent<SpriteRenderer>();
+        startPosition = transform.position;
     }
 
     // Update is called once per frame
@@ -84,9 +87,10 @@ public class PlayerMovement : MonoBehaviour
             isReloading = true;
             StartCoroutine(ReloadCoroutine());
             Vector3 direction = (mouseWorldPos - transform.position).normalized;
+            ShootBullets(direction);
             direction.x *= 2.5f;
             rb.AddForce(-direction * recoilForce, ForceMode2D.Impulse);
-            ShootBullets(direction);
+
         }
         // Apply recoil
         //Vector3 direction = (mouseWorldPos - transform.position).normalized;
@@ -121,6 +125,7 @@ public class PlayerMovement : MonoBehaviour
     }
     IEnumerator HitEffect()
     {
+        LoseLife();
         spriteRenderer.color = Color.red;
         yield return new WaitForSeconds(0.2f);
         spriteRenderer.color = Color.white;
@@ -152,34 +157,29 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator ReloadCoroutine()
     {
-        Debug.Log("Reloading...");
-
-        if (reloadCircle != null)
-        {
-            reloadCircle.gameObject.SetActive(true);
-            reloadCircle.fillAmount = 0f;
-        }
-
+        // reloadCircle.gameObject.SetActive(true);
+        // reloadCircle.fillAmount = 0f;
         float elapsed = 0f;
-
         while (elapsed < reloadTime)
         {
             elapsed += Time.deltaTime;
-            if (reloadCircle != null)
-            {
-                reloadCircle.fillAmount = Mathf.Clamp01(elapsed / reloadTime);
-            }
-            Debug.Log("Reload progress: " + (elapsed / reloadTime));
+            // reloadCircle.fillAmount = elapsed / reloadTime;
             yield return null;
         }
-
-        if (reloadCircle != null)
-        {
-            reloadCircle.fillAmount = 0f;
-            reloadCircle.gameObject.SetActive(false);
-        }
-
+        // reloadCircle.fillAmount = 0f;
+        yield return null;
         isReloading = false;
-        Debug.Log("Reload complete");
+    }
+
+    void LoseLife()
+    {
+        lives--;
+        Debug.Log("Player lost a life!");
+        if (lives <= 0)
+        {
+            Debug.Log("Player has died!");
+            transform.position = startPosition;
+            lives = 3;
+        }
     }
 }

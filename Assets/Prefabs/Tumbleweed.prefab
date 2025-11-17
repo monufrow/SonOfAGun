@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1181435741604665851}
   - component: {fileID: 2616402971551842773}
   - component: {fileID: 6209611658060462040}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tumbleweed
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 2029956494090980356, guid: 149ec4ea70dcd3446ab5e1e9ec5ce1ae, type: 3}
+  m_Sprite: {fileID: 1901409825815419977, guid: 7bf34a4f385f8514aa797c3829e9bb02, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -173,5 +173,5 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.11835599}
-  m_Radius: 1.1437318
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 1.1
