@@ -602,7 +602,7 @@ GameObject:
   - component: {fileID: 346351062}
   - component: {fileID: 346351061}
   m_Layer: 0
-  m_Name: Square
+  m_Name: End
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1159,7 +1159,7 @@ MonoBehaviour:
   shotDistance: 6
   bulletCount: 3
   reloadTime: 2
-  reloadCircle: {fileID: 0}
+  lives: 3
 --- !u!114 &1791162797
 MonoBehaviour:
   m_ObjectHideFlags: 0
