@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     public float reloadTime = 2f;
     private bool isReloading = false;
     private Vector2 moveInput;
-    public Image reloadCircle;
+    //public Image reloadCircle;
     public int lives = 3;
     private Vector3 startPosition;
 
@@ -157,16 +157,16 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator ReloadCoroutine()
     {
-        reloadCircle.gameObject.SetActive(true);
-        reloadCircle.fillAmount = 0f;
+        // reloadCircle.gameObject.SetActive(true);
+        // reloadCircle.fillAmount = 0f;
         float elapsed = 0f;
         while (elapsed < reloadTime)
         {
             elapsed += Time.deltaTime;
-            reloadCircle.fillAmount = elapsed / reloadTime;
+            // reloadCircle.fillAmount = elapsed / reloadTime;
             yield return null;
         }
-        reloadCircle.fillAmount = 0f;
+        // reloadCircle.fillAmount = 0f;
         yield return null;
         isReloading = false;
     }
