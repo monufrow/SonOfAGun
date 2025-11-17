@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1181435741604665851}
   - component: {fileID: 2616402971551842773}
   - component: {fileID: 6209611658060462040}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tumbleweed
   m_TagString: Enemy
   m_Icon: {fileID: 0}
