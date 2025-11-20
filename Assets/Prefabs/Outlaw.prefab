@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 6834236675618058119}
   - component: {fileID: 2993898551305202779}
   - component: {fileID: 2516498040313946991}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Outlaw
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
