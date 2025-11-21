@@ -6,11 +6,13 @@ public class OutlawBehavior : MonoBehaviour
     [SerializeField] private float shootInterval = 5.0f;
     [SerializeField] private GameObject bulletPrefab;
     public float health = 100.0f;
+    private SpriteRenderer sr;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         StartCoroutine(ShootRoutine());
+        sr = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -47,6 +49,9 @@ public class OutlawBehavior : MonoBehaviour
     }
     IEnumerator Die()
     {
+        sr.color = Color.red;
+        yield return new WaitForSeconds(0.2f);
+        sr.color = Color.white;
         // Play death animation or effects here
         Destroy(GetComponent<Rigidbody2D>());
         yield return new WaitForSeconds(0.5f); // Wait for animation to finish
