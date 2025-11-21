@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     //public Image reloadCircle;
     public int lives = 3;
     private Vector3 startPosition;
+    private int layerToIgnore;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -34,6 +35,8 @@ public class PlayerMovement : MonoBehaviour
         playerMaterial = GetComponent<SpriteRenderer>().material;
         spriteRenderer = GetComponent<SpriteRenderer>();
         startPosition = transform.position;
+        layerToIgnore = 1 << LayerMask.NameToLayer("Player");
+
     }
 
     // Update is called once per frame
@@ -136,12 +139,18 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("Shooting bullets");
         for (int i = 0; i < bulletCount; i++)
         {
+            int layerMask = ~layerToIgnore;
             Vector3 spreadDirection = Quaternion.AngleAxis(Random.Range(-10, 11), Vector3.forward) * direction;
             Vector3 bulletOffset = new Vector3(0, Random.Range(-3, 4) * .05f, 0);
-            RaycastHit2D hit = Physics2D.Raycast(transform.position + bulletOffset, spreadDirection, shotDistance, LayerMask.GetMask("Enemy"));
+            RaycastHit2D hit = Physics2D.Raycast(transform.position + bulletOffset, spreadDirection, shotDistance, layerMask); //LayerMask.GetMask("Enemy")
             ShootBulletsDebug(spreadDirection, bulletOffset);
             if (hit.collider != null)
             {
+                if (hit.collider.CompareTag("Enemy"))
+                {
+                    GameObject hitEnemy = hit.collider.gameObject;
+                    Destroy(hitEnemy);
+                }
                 Debug.Log("Bullet hit: " + hit.collider.name);
                 // Here you can add logic to deal damage to the hit object if it has a health component
             }
