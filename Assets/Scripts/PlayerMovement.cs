@@ -27,6 +27,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 startPosition;
     [SerializeField] private GameObject BulletPrefab;
     
+    private int layerToIgnore;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,6 +37,8 @@ public class PlayerMovement : MonoBehaviour
         playerMaterial = GetComponent<SpriteRenderer>().material;
         spriteRenderer = GetComponent<SpriteRenderer>();
         startPosition = transform.position;
+        layerToIgnore = 1 << LayerMask.NameToLayer("Player");
+
     }
 
     // Update is called once per frame
@@ -111,12 +115,18 @@ public class PlayerMovement : MonoBehaviour
         for (int i = 0; i < bulletCount; i++)
         {
             Vector3 spreadDirection = Quaternion.AngleAxis(Random.Range(-10, 11), Vector3.forward) * bulletDrection;
+            int layerMask = ~layerToIgnore;
             Vector3 bulletOffset = new Vector3(0, Random.Range(-3, 4) * .05f, 0);
-            RaycastHit2D hit = Physics2D.Raycast(transform.position + bulletOffset, spreadDirection, shotDistance, LayerMask.GetMask("Enemy"));
+            RaycastHit2D hit = Physics2D.Raycast(transform.position + bulletOffset, spreadDirection, shotDistance, layerMask); //LayerMask.GetMask("Enemy")
             ShootBulletsDebug(spreadDirection, bulletOffset);
             Instantiate(BulletPrefab, transform.position, Quaternion.LookRotation(Vector3.forward, spreadDirection));
             if (hit.collider != null)
             {
+                if (hit.collider.CompareTag("Enemy"))
+                {
+                    GameObject hitEnemy = hit.collider.gameObject;
+                    Destroy(hitEnemy);
+                }
                 Debug.Log("Bullet hit: " + hit.collider.name);
                 EnemyBase enemy = hit.collider.GetComponent<EnemyBase>();
                 if (enemy != null)
