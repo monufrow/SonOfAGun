@@ -1,9 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class ScorpionBehavior : MonoBehaviour
+public class ScorpionBehavior : EnemyBase
 {
-    public float health = 10f;
     public float patrolRange = 5f;
     private float leftPoint;
     private float rightPoint;
@@ -20,6 +19,7 @@ public class ScorpionBehavior : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     private BoxCollider2D objectCollider;
+    private bool takingDamage = false;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -50,7 +50,7 @@ public class ScorpionBehavior : MonoBehaviour
 
     void Patrol()
     {
-        animator.ResetTrigger("Patrol");
+        
         rb.linearVelocity = new Vector2(patrolDirection.x * patrolSpeed, rb.linearVelocity.y);
         // Turn around logic, subject to change
         //      likely to cause problems in current state
@@ -70,7 +70,6 @@ public class ScorpionBehavior : MonoBehaviour
         //scale.x *= -1;
         //transform.localScale = scale;
         spriteRenderer.flipX = !spriteRenderer.flipX;   
-        Debug.Log("Scorpion flipped direction!");
     }
     IEnumerator Charge()
     {
@@ -91,7 +90,6 @@ public class ScorpionBehavior : MonoBehaviour
         isCharging = false;
         yield return new WaitForSeconds(chargeCooldown); // cooldown before next charge
         canCharge = true;
-        animator.ResetTrigger("Charge");
         animator.SetTrigger("Patrol");
     }
     void OnCollisionEnter2D(Collision2D collision)
@@ -99,6 +97,10 @@ public class ScorpionBehavior : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("Player hit by scorpion charge!");
+            if(!takingDamage){
+                TakeDamage(20);
+                StartCoroutine(HitEffectRoutine());
+            }
         }
         else
         {
@@ -111,27 +113,19 @@ public class ScorpionBehavior : MonoBehaviour
             Flip();
         }
     }
-    public void gotShot(float damageAmount)
+    public override IEnumerator HitEffectRoutine()
     {
-        health -= damageAmount;
-        Debug.Log("Scorpion took " + damageAmount + " damage!");
-        StartCoroutine(HitEffect());
-        if (health <= 0)
-        {
-            Die();
-        }
-
-    }
-    IEnumerator HitEffect()
-    {
-        spriteRenderer.color = Color.red;
-        yield return new WaitForSeconds(0.2f);
+        spriteRenderer.color = Color.yellow;
+        takingDamage = true;
+        yield return new WaitForSeconds(0.3f);
         spriteRenderer.color = Color.white;
+        takingDamage = false;
     }
-    void Die()
+    public override void Die()
     {
         animator.SetTrigger("Die");
         Debug.Log("Scorpion died!");
+        rb.gravityScale = 0f;
         Destroy(objectCollider);
         Destroy(gameObject, 1f);
     }

@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using UnityEngine.UI;
+using NUnit.Framework.Internal;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -15,6 +17,17 @@ public class PlayerMovement : MonoBehaviour
     public GameObject crosshair;
     [SerializeField] private Material playerMaterial;
     SpriteRenderer spriteRenderer;
+    public float shotDistance = 6f;
+    public int bulletCount = 3;
+    public float reloadTime = 2f;
+    private bool isReloading = false;
+    private Vector2 moveInput;
+    public Image reloadCircle;
+    public int lives = 3;
+    private Vector3 startPosition;
+    [SerializeField] private GameObject BulletPrefab;
+    
+    private int layerToIgnore;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -23,6 +36,9 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         playerMaterial = GetComponent<SpriteRenderer>().material;
         spriteRenderer = GetComponent<SpriteRenderer>();
+        startPosition = transform.position;
+        layerToIgnore = 1 << LayerMask.NameToLayer("Player");
+
     }
 
     // Update is called once per frame
@@ -30,11 +46,31 @@ public class PlayerMovement : MonoBehaviour
     {
         crosshair.transform.position = mouseScreenPos;
         MouseMove();
+        Vector2 targetVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
+        //if (rb.linearVelocity == Vector2.zero || rb.linearVelocity == targetVelocity)
+        // {
+        //     rb.linearVelocity = targetVelocity;
+        // }
+        // else
+        // {
+        //     rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, targetVelocity, 0.0075f);
+        // }
+        if (Mathf.Abs(rb.linearVelocity.x) > Mathf.Abs(targetVelocity.x))
+        {
+            // lerp wil interpolate between two vectors, when the float is closer to 0 it will
+            // prefer to stay closer to the first vector. This will bring the player back to walking speed over time.
+            // its kinda quick but this was the best option I found, either it instantly went back to walking speed, or the player slid too long.
+            // between 0.01 and 0.005 were good values I found.
+            rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, targetVelocity, 0.0075f);
+        }
+        else
+        {
+            rb.linearVelocity = targetVelocity;
+        }
     }
     void OnMove(InputValue value)
     {
-        Vector2 movement = new Vector2(value.Get<Vector2>().x * moveSpeed, rb.linearVelocity.y);
-        rb.linearVelocity = movement;
+        moveInput = value.Get<Vector2>();
     }
     void OnJump()
     {
@@ -50,10 +86,16 @@ public class PlayerMovement : MonoBehaviour
     }
     void OnAttack()
     {
-        // Apply recoil
-        Vector3 direction = (mouseWorldPos - transform.position).normalized;
-        rb.AddForce(-direction * recoilForce, ForceMode2D.Impulse);
-        Debug.Log("Recoil applied");
+        if (!isReloading)
+        {
+            Debug.Log("Shots fired");
+            isReloading = true;
+            StartCoroutine(ReloadCoroutine());
+            Vector3 direction = (mouseWorldPos - transform.position).normalized;
+            ShootBullets(direction);
+            direction.x *= 2.5f;
+            rb.AddForce(-direction * recoilForce, ForceMode2D.Impulse);
+        }
     }
     void MouseMove()
     {
@@ -67,18 +109,94 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void ShootBullets(Vector3 bulletDrection)
+    {
+        Debug.Log("Shooting bullets");
+        for (int i = 0; i < bulletCount; i++)
+        {
+            Vector3 spreadDirection = Quaternion.AngleAxis(Random.Range(-10, 11), Vector3.forward) * bulletDrection;
+            int layerMask = ~layerToIgnore;
+            Vector3 bulletOffset = new Vector3(0, Random.Range(-3, 4) * .05f, 0);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position + bulletOffset, spreadDirection, shotDistance, layerMask); //LayerMask.GetMask("Enemy")
+            ShootBulletsDebug(spreadDirection, bulletOffset);
+            Instantiate(BulletPrefab, transform.position, Quaternion.LookRotation(Vector3.forward, spreadDirection));
+            if (hit.collider != null)
+            {
+                if (hit.collider.CompareTag("Enemy"))
+                {
+                    GameObject hitEnemy = hit.collider.gameObject;
+                    Destroy(hitEnemy);
+                }
+                Debug.Log("Bullet hit: " + hit.collider.name);
+                EnemyBase enemy = hit.collider.GetComponent<EnemyBase>();
+                if (enemy != null)
+                {
+                    enemy.TakeDamage(34);
+                    enemy.HitEffect();
+                    if (enemy.health <= 0)
+                    {
+                        enemy.Die();
+                    }
+                }
+            }
+        }
+    }
+    void ShootBulletsDebug(Vector3 direction, Vector3 offset)
+    {
+        Debug.DrawRay(transform.position + offset, direction * shotDistance, Color.red, 2f, false);
+
+        //Debug.DrawRay(transform.position + new Vector3(0, .1f, 0), Quaternion.AngleAxis(Random.Range(-2, 11), Vector3.forward) * direction * shotDistance, Color.green, 2f, false);
+        //Debug.DrawRay(transform.position - new Vector3(0, .1f, 0), Quaternion.AngleAxis(Random.Range(-10, 3), Vector3.forward) * direction * shotDistance, Color.green, 2f, false);
+    }
+
+    IEnumerator ReloadCoroutine()
+    {
+        isReloading = true;
+        reloadCircle.gameObject.SetActive(true);
+        reloadCircle.fillAmount = 0f;
+        float elapsed = 0f;
+        while (elapsed < reloadTime)
+        {
+            elapsed += Time.deltaTime;
+            reloadCircle.fillAmount = elapsed / reloadTime;
+            yield return null;
+        }
+        reloadCircle.fillAmount = 0f;
+        yield return null;
+        isReloading = false;
+    }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("Collided with Tumbleweed");
+            Debug.Log("Collided with Enemy");
+            StartCoroutine(HitEffect());
+        }
+        if (collision.gameObject.CompareTag("Cactus"))
+        {
+            Debug.Log("Collided with Cactus");
             StartCoroutine(HitEffect());
         }
     }
     IEnumerator HitEffect()
     {
+        LoseLife();
         spriteRenderer.color = Color.red;
         yield return new WaitForSeconds(0.2f);
         spriteRenderer.color = Color.white;
+    }
+    void LoseLife()
+    {
+        lives--;
+        GameManager.Instance.LoseLife();
+        Debug.Log("Player lost a life!");
+        if (lives <= 0)
+        {
+            Debug.Log("Player has died!");
+            transform.position = startPosition;
+            lives = 3;
+            GameManager.Instance.RestoreLives();
+        }
     }
 }
