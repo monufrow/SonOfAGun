@@ -41,6 +41,9 @@ public class TumbleweedMovement : EnemyBase
         if(!collision.gameObject.CompareTag("Ground") && !collision.gameObject.CompareTag("Enemy"))
         {
             Destroy(gameObject);
+        }else if (collision.gameObject.CompareTag("InstantDeath"))
+        {
+            Destroy(gameObject);
         }
         else if (bounceEnabled)
         {

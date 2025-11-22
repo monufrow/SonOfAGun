@@ -101,6 +101,9 @@ public class ScorpionBehavior : EnemyBase
                 TakeDamage(20);
                 StartCoroutine(HitEffectRoutine());
             }
+        }else if (collision.gameObject.CompareTag("InstantDeath"))
+        {
+            Die();
         }
         else
         {
@@ -124,9 +127,8 @@ public class ScorpionBehavior : EnemyBase
     public override void Die()
     {
         animator.SetTrigger("Die");
-        Debug.Log("Scorpion died!");
         rb.gravityScale = 0f;
         Destroy(objectCollider);
-        Destroy(gameObject, 1f);
+        Destroy(gameObject, 4f);
     }
 }

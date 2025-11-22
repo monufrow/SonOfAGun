@@ -88,7 +88,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isReloading)
         {
-            Debug.Log("Shots fired");
             isReloading = true;
             StartCoroutine(ReloadCoroutine());
             Vector3 direction = (mouseWorldPos - transform.position).normalized;
@@ -111,7 +110,7 @@ public class PlayerMovement : MonoBehaviour
 
     void ShootBullets(Vector3 bulletDrection)
     {
-        Debug.Log("Shooting bullets");
+        //Debug.Log("Shooting bullets");
         for (int i = 0; i < bulletCount; i++)
         {
             Vector3 spreadDirection = Quaternion.AngleAxis(Random.Range(-10, 11), Vector3.forward) * bulletDrection;
@@ -127,7 +126,7 @@ public class PlayerMovement : MonoBehaviour
                     GameObject hitEnemy = hit.collider.gameObject;
                     Destroy(hitEnemy);
                 }
-                Debug.Log("Bullet hit: " + hit.collider.name);
+                //Debug.Log("Bullet hit: " + hit.collider.name);
                 EnemyBase enemy = hit.collider.GetComponent<EnemyBase>();
                 if (enemy != null)
                 {
@@ -170,13 +169,22 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("Collided with Enemy");
+            //Debug.Log("Collided with Enemy");
             StartCoroutine(HitEffect());
         }
-        if (collision.gameObject.CompareTag("Cactus"))
+        else if (collision.gameObject.CompareTag("Cactus"))
         {
             Debug.Log("Collided with Cactus");
             StartCoroutine(HitEffect());
+        }
+        else if (collision.gameObject.CompareTag("InstantDeath"))
+        {
+            Debug.Log("Collided with Instant Death object");
+            Respawn();
+        }else if (collision.gameObject.CompareTag("Goal"))
+        {
+            Debug.Log("Player reached the goal!");
+            //GameManager.Instance.LevelComplete();
         }
     }
     IEnumerator HitEffect()
@@ -190,13 +198,17 @@ public class PlayerMovement : MonoBehaviour
     {
         lives--;
         GameManager.Instance.LoseLife();
-        Debug.Log("Player lost a life!");
+        //Debug.Log("Player lost a life!");
         if (lives <= 0)
         {
-            Debug.Log("Player has died!");
-            transform.position = startPosition;
-            lives = 3;
-            GameManager.Instance.RestoreLives();
+            //Debug.Log("Player has died!");
+            Respawn();
         }
+    }
+    void Respawn()
+    {
+        transform.position = startPosition;
+        lives = 3;
+        GameManager.Instance.RestoreLives();
     }
 }

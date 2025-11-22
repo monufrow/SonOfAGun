@@ -8,6 +8,8 @@ TagManager:
   - Ground
   - Cactus
   - PlayerBullet
+  - InstantDeath
+  - Goal
   layers:
   - Default
   - TransparentFX
