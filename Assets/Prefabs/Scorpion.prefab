@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4458523564833337098}
   - component: {fileID: 4753371916505730421}
   - component: {fileID: 3540649790348825796}
+  - component: {fileID: 6065924073013786477}
   m_Layer: 7
   m_Name: Scorpion
   m_TagString: Enemy
@@ -210,3 +211,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6065924073013786477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7537181822173416548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 912198e2f974c604d8385b50d4381471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyBase
+  health: 30
