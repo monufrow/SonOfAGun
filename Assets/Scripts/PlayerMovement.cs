@@ -172,10 +172,19 @@ public class PlayerMovement : MonoBehaviour
             //Debug.Log("Collided with Enemy");
             StartCoroutine(HitEffect());
         }
-        if (collision.gameObject.CompareTag("Cactus"))
+        else if (collision.gameObject.CompareTag("Cactus"))
         {
             Debug.Log("Collided with Cactus");
             StartCoroutine(HitEffect());
+        }
+        else if (collision.gameObject.CompareTag("InstantDeath"))
+        {
+            Debug.Log("Collided with Instant Death object");
+            Respawn();
+        }else if (collision.gameObject.CompareTag("Goal"))
+        {
+            Debug.Log("Player reached the goal!");
+            //GameManager.Instance.LevelComplete();
         }
     }
     IEnumerator HitEffect()
@@ -193,9 +202,13 @@ public class PlayerMovement : MonoBehaviour
         if (lives <= 0)
         {
             //Debug.Log("Player has died!");
-            transform.position = startPosition;
-            lives = 3;
-            GameManager.Instance.RestoreLives();
+            Respawn();
         }
+    }
+    void Respawn()
+    {
+        transform.position = startPosition;
+        lives = 3;
+        GameManager.Instance.RestoreLives();
     }
 }

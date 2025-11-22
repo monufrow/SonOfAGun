@@ -8,8 +8,13 @@ public class EnemyBase : MonoBehaviour
     public virtual void TakeDamage(int amount)
     {
         health -= amount;
-        if (health <= 0) Destroy(gameObject);
-        HitEffect();
+        if (health <= 0){
+            Die();
+        }
+        else
+        {
+            HitEffect();
+        }
     }
     public virtual void HitEffect()
     {
