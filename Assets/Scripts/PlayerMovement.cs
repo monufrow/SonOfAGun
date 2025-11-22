@@ -25,6 +25,8 @@ public class PlayerMovement : MonoBehaviour
     public Image reloadCircle;
     public int lives = 3;
     private Vector3 startPosition;
+    [SerializeField] private GameObject BulletPrefab;
+    
     private int layerToIgnore;
 
 
@@ -93,13 +95,7 @@ public class PlayerMovement : MonoBehaviour
             ShootBullets(direction);
             direction.x *= 2.5f;
             rb.AddForce(-direction * recoilForce, ForceMode2D.Impulse);
-
         }
-        // Apply recoil
-        //Vector3 direction = (mouseWorldPos - transform.position).normalized;
-        //rb.AddForce(-direction * recoilForce, ForceMode2D.Impulse);
-        //ShootBullets(direction);
-        //Debug.Log("Recoil applied");
     }
     void MouseMove()
     {
@@ -111,6 +107,63 @@ public class PlayerMovement : MonoBehaviour
 
             crosshair.transform.position = mouseWorldPos;
         }
+    }
+
+    void ShootBullets(Vector3 bulletDrection)
+    {
+        Debug.Log("Shooting bullets");
+        for (int i = 0; i < bulletCount; i++)
+        {
+            Vector3 spreadDirection = Quaternion.AngleAxis(Random.Range(-10, 11), Vector3.forward) * bulletDrection;
+            int layerMask = ~layerToIgnore;
+            Vector3 bulletOffset = new Vector3(0, Random.Range(-3, 4) * .05f, 0);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position + bulletOffset, spreadDirection, shotDistance, layerMask); //LayerMask.GetMask("Enemy")
+            ShootBulletsDebug(spreadDirection, bulletOffset);
+            Instantiate(BulletPrefab, transform.position, Quaternion.LookRotation(Vector3.forward, spreadDirection));
+            if (hit.collider != null)
+            {
+                if (hit.collider.CompareTag("Enemy"))
+                {
+                    GameObject hitEnemy = hit.collider.gameObject;
+                    Destroy(hitEnemy);
+                }
+                Debug.Log("Bullet hit: " + hit.collider.name);
+                EnemyBase enemy = hit.collider.GetComponent<EnemyBase>();
+                if (enemy != null)
+                {
+                    enemy.TakeDamage(34);
+                    enemy.HitEffect();
+                    if (enemy.health <= 0)
+                    {
+                        enemy.Die();
+                    }
+                }
+            }
+        }
+    }
+    void ShootBulletsDebug(Vector3 direction, Vector3 offset)
+    {
+        Debug.DrawRay(transform.position + offset, direction * shotDistance, Color.red, 2f, false);
+
+        //Debug.DrawRay(transform.position + new Vector3(0, .1f, 0), Quaternion.AngleAxis(Random.Range(-2, 11), Vector3.forward) * direction * shotDistance, Color.green, 2f, false);
+        //Debug.DrawRay(transform.position - new Vector3(0, .1f, 0), Quaternion.AngleAxis(Random.Range(-10, 3), Vector3.forward) * direction * shotDistance, Color.green, 2f, false);
+    }
+
+    IEnumerator ReloadCoroutine()
+    {
+        isReloading = true;
+        reloadCircle.gameObject.SetActive(true);
+        reloadCircle.fillAmount = 0f;
+        float elapsed = 0f;
+        while (elapsed < reloadTime)
+        {
+            elapsed += Time.deltaTime;
+            reloadCircle.fillAmount = elapsed / reloadTime;
+            yield return null;
+        }
+        reloadCircle.fillAmount = 0f;
+        yield return null;
+        isReloading = false;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -133,53 +186,6 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         spriteRenderer.color = Color.white;
     }
-
-    void ShootBullets(Vector3 direction)
-    {
-        Debug.Log("Shooting bullets");
-        for (int i = 0; i < bulletCount; i++)
-        {
-            int layerMask = ~layerToIgnore;
-            Vector3 spreadDirection = Quaternion.AngleAxis(Random.Range(-10, 11), Vector3.forward) * direction;
-            Vector3 bulletOffset = new Vector3(0, Random.Range(-3, 4) * .05f, 0);
-            RaycastHit2D hit = Physics2D.Raycast(transform.position + bulletOffset, spreadDirection, shotDistance, layerMask); //LayerMask.GetMask("Enemy")
-            ShootBulletsDebug(spreadDirection, bulletOffset);
-            if (hit.collider != null)
-            {
-                if (hit.collider.CompareTag("Enemy"))
-                {
-                    GameObject hitEnemy = hit.collider.gameObject;
-                    Destroy(hitEnemy);
-                }
-                Debug.Log("Bullet hit: " + hit.collider.name);
-                // Here you can add logic to deal damage to the hit object if it has a health component
-            }
-        }
-    }
-    void ShootBulletsDebug(Vector3 direction, Vector3 offset)
-    {
-        Debug.DrawRay(transform.position + offset, direction * shotDistance, Color.red, 2f, false);
-
-        //Debug.DrawRay(transform.position + new Vector3(0, .1f, 0), Quaternion.AngleAxis(Random.Range(-2, 11), Vector3.forward) * direction * shotDistance, Color.green, 2f, false);
-        //Debug.DrawRay(transform.position - new Vector3(0, .1f, 0), Quaternion.AngleAxis(Random.Range(-10, 3), Vector3.forward) * direction * shotDistance, Color.green, 2f, false);
-    }
-
-    IEnumerator ReloadCoroutine()
-    {
-        reloadCircle.gameObject.SetActive(true);
-        reloadCircle.fillAmount = 0f;
-        float elapsed = 0f;
-        while (elapsed < reloadTime)
-        {
-            elapsed += Time.deltaTime;
-            reloadCircle.fillAmount = elapsed / reloadTime;
-            yield return null;
-        }
-        reloadCircle.fillAmount = 0f;
-        yield return null;
-        isReloading = false;
-    }
-
     void LoseLife()
     {
         lives--;

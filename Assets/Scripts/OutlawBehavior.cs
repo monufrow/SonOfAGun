@@ -1,11 +1,10 @@
 using UnityEngine;
 using System.Collections;
 
-public class OutlawBehavior : MonoBehaviour
+public class OutlawBehavior : EnemyBase
 {
     [SerializeField] private float shootInterval = 5.0f;
     [SerializeField] private GameObject bulletPrefab;
-    public float health = 100.0f;
     private SpriteRenderer sr;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -18,7 +17,7 @@ public class OutlawBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     IEnumerator ShootRoutine()
     {
@@ -30,24 +29,31 @@ public class OutlawBehavior : MonoBehaviour
     }
     void Shoot()
     {
-        GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
+        Instantiate(bulletPrefab, transform.position, transform.rotation);
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
-        /*if (collision.gameObject.CompareTag("PlayerBullet"))
+        if (collision.gameObject.CompareTag("Player"))
         {
-            health -= 34.0f;
-            if (health <= 0)
-            {
-                StartCoroutine(Die());
-            }
-        }else */if (collision.gameObject.CompareTag("Player"))
-        {
-            // Handle player collision logic here
-            StartCoroutine(Die());
+            TakeDamage(50);
         }
     }
-    IEnumerator Die()
+    public override void HitEffect()
+    {
+        StartCoroutine(HitEffectRoutine());
+    }
+    public override IEnumerator HitEffectRoutine()
+    {
+        sr.color = Color.yellow;
+        yield return new WaitForSeconds(0.2f);
+        sr.color = Color.white;
+        // really, this could be a void method that plays an animation or something
+    }
+    public override void Die()
+    {
+        StartCoroutine(DieRoutine());
+    }
+    public override IEnumerator DieRoutine()
     {
         sr.color = Color.red;
         yield return new WaitForSeconds(0.2f);
