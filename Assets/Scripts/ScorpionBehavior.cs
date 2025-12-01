@@ -96,14 +96,13 @@ public class ScorpionBehavior : EnemyBase
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player hit by scorpion charge!");
             if(!takingDamage){
-                TakeDamage(20);
+                TakeDamage(50);
                 StartCoroutine(HitEffectRoutine());
             }
         }else if (collision.gameObject.CompareTag("InstantDeath"))
         {
-            Die();
+            Destroy(gameObject);
         }
         else
         {

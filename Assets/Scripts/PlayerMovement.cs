@@ -190,6 +190,7 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator HitEffect()
     {
         LoseLife();
+        rb.AddForce(new Vector2(-rb.linearVelocity.x, jumpForce / 2), ForceMode2D.Impulse);
         spriteRenderer.color = Color.red;
         yield return new WaitForSeconds(0.2f);
         spriteRenderer.color = Color.white;
