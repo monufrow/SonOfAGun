@@ -29,14 +29,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject BulletPrefab;
     
     private int layerToIgnore;
-    private Animator animator;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
         playerMaterial = GetComponent<SpriteRenderer>().material;
         spriteRenderer = GetComponent<SpriteRenderer>();
         startPosition = transform.position;
@@ -70,8 +68,6 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.linearVelocity = targetVelocity;
         }
-        animator.SetFloat("XVelo", Mathf.Abs(rb.linearVelocity.x));
-        animator.SetFloat("YVelo", Mathf.Abs(rb.linearVelocity.y));
     }
     void OnMove(InputValue value)
     {
@@ -165,9 +161,8 @@ public class PlayerMovement : MonoBehaviour
             reloadCircle.fillAmount = elapsed / reloadTime;
             yield return null;
         }
-        reloadCircle.fillAmount = 0f;*/
-        // yield return null
-        yield return new WaitForSeconds(reloadTime); //delete after implimenting reload circle
+        reloadCircle.fillAmount = 0f;
+        yield return null;
         isReloading = false;
     }
 
