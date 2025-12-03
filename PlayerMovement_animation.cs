@@ -31,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
     private int layerToIgnore;
     private Animator animator;
 
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -164,8 +165,9 @@ public class PlayerMovement : MonoBehaviour
             reloadCircle.fillAmount = elapsed / reloadTime;
             yield return null;
         }
-        reloadCircle.fillAmount = 0f;
-        yield return null;
+        reloadCircle.fillAmount = 0f;*/
+        // yield return null
+        yield return new WaitForSeconds(reloadTime); //delete after implimenting reload circle
         isReloading = false;
     }
 
