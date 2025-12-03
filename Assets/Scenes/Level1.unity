@@ -1124,14 +1124,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1791162801}
-  - component: {fileID: 1791162800}
   - component: {fileID: 1791162799}
   - component: {fileID: 1791162798}
   - component: {fileID: 1791162797}
   - component: {fileID: 1791162796}
+  - component: {fileID: 1791162802}
+  - component: {fileID: 1791162803}
   m_Layer: 0
   m_Name: Player (1)
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1148,6 +1149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d9952a108a91304a9a0c413d0a67940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  playerHeight: 1.6
   moveSpeed: 5
   jumpForce: 9
   recoilForce: 12
@@ -1159,7 +1161,9 @@ MonoBehaviour:
   shotDistance: 6
   bulletCount: 3
   reloadTime: 2
+  reloadCircle: {fileID: 0}
   lives: 3
+  BulletPrefab: {fileID: 0}
 --- !u!114 &1791162797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1251,19 +1255,59 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.010852158, y: 0.038829446}
+  m_Offset: {x: 0.026436687, y: 0.034181595}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.24, y: 1.74}
-    newSize: {x: 2.35, y: 1.6}
+    oldSize: {x: 0.9, y: 3.1}
+    newSize: {x: 0.9, y: 3.1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.2084209, y: 1.6677847}
+  m_Size: {x: 1.1338432, y: 3.0940623}
   m_EdgeRadius: 0
---- !u!212 &1791162800
+--- !u!4 &1791162801
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1791162795}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.691952, y: -2.7, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 328377155}
+  - {fileID: 8934931}
+  - {fileID: 2022745696}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1791162802
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1791162795}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 82cbf4e777c17f2449caa8e431bf6492, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!212 &1791162803
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1288,7 +1332,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2a129adc5a2fc614096257d9b0a976d5, type: 2}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1310,35 +1354,17 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7421452353678987458, guid: f2641f44e177c044aa432a7dd1a9898d, type: 3}
+  m_Sprite: {fileID: 486063001734685066, guid: 8aecf35f94e4c674886529862c0f38cd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.35, y: 1.6}
+  m_Size: {x: 0.9, y: 3.1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!4 &1791162801
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1791162795}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.49, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 328377155}
-  - {fileID: 8934931}
-  - {fileID: 2022745696}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1911045227 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8022115978422156784, guid: caa0ce0a49d51314582379ba9f451f89, type: 3}

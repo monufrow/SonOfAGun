@@ -6,6 +6,7 @@ using NUnit.Framework.Internal;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public float playerHeight;
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
     public float recoilForce = 20f;
@@ -81,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private bool IsGrounded()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 1f, groundLayer);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, playerHeight, groundLayer);
         return hit.collider != null;
     }
     void OnAttack()
