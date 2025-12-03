@@ -29,12 +29,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject BulletPrefab;
     
     private int layerToIgnore;
-
+    private Animator animator;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         playerMaterial = GetComponent<SpriteRenderer>().material;
         spriteRenderer = GetComponent<SpriteRenderer>();
         startPosition = transform.position;
