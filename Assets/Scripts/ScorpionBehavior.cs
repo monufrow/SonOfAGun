@@ -1,9 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class ScorpionBehavior : MonoBehaviour
+public class ScorpionBehavior : EnemyBase
 {
-    public float health = 10f;
     public float patrolRange = 5f;
     private float leftPoint;
     private float rightPoint;
@@ -97,10 +96,13 @@ public class ScorpionBehavior : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player hit by scorpion charge!");
             if(!takingDamage){
-                gotShot(50f);
+                TakeDamage(50);
+                StartCoroutine(HitEffectRoutine());
             }
+        }else if (collision.gameObject.CompareTag("InstantDeath"))
+        {
+            Destroy(gameObject);
         }
         else
         {
@@ -113,31 +115,19 @@ public class ScorpionBehavior : MonoBehaviour
             Flip();
         }
     }
-    public void gotShot(float damageAmount)
+    public override IEnumerator HitEffectRoutine()
     {
-        health -= damageAmount;
-        Debug.Log("Scorpion took " + damageAmount + " damage!");
-        StartCoroutine(HitEffect());
-        if (health <= 0)
-        {
-            Die();
-        }
-
-    }
-    IEnumerator HitEffect()
-    {
-        spriteRenderer.color = Color.blue;
+        spriteRenderer.color = Color.yellow;
         takingDamage = true;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.3f);
         spriteRenderer.color = Color.white;
         takingDamage = false;
     }
-    void Die()
+    public override void Die()
     {
         animator.SetTrigger("Die");
-        Debug.Log("Scorpion died!");
         rb.gravityScale = 0f;
         Destroy(objectCollider);
-        Destroy(gameObject, 1f);
+        Destroy(gameObject, 4f);
     }
 }

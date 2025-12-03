@@ -1,10 +1,22 @@
 fileFormatVersion: 2
-guid: 149ec4ea70dcd3446ab5e1e9ec5ce1ae
+guid: cabf492dd01be184f9288b4546a30e61
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2029956494090980356
-    second: tumbleeed_0_0
+      213: -6494656711642010645
+    second: flag animation_0
+  - first:
+      213: -4341209307699571989
+    second: flag animation_1
+  - first:
+      213: 4625237377173308275
+    second: flag animation_2
+  - first:
+      213: -455622095734552585
+    second: flag animation_3
+  - first:
+      213: 6712714840332784938
+    second: flag animation_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +138,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: tumbleeed_0_0
+      name: flag animation_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 289
-        height: 289
+        x: 4
+        y: 1
+        width: 34
+        height: 52
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +153,96 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 40c4acb1daadb2c10800000000000000
-      internalID: 2029956494090980356
+      spriteID: beba87481285ed5a0800000000000000
+      internalID: -6494656711642010645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flag animation_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 1
+        width: 32
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be292f6a22de0c3c0800000000000000
+      internalID: -4341209307699571989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flag animation_2
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 1
+        width: 33
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 373464493e4203040800000000000000
+      internalID: 4625237377173308275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flag animation_3
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 1
+        width: 34
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f74cef2e1e4da9f0800000000000000
+      internalID: -455622095734552585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flag animation_4
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 1
+        width: 32
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a255780f49a582d50800000000000000
+      internalID: 6712714840332784938
       vertices: []
       indices: 
       edges: []
@@ -161,7 +261,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      tumbleeed_0_0: 2029956494090980356
+      flag animation_0: -6494656711642010645
+      flag animation_1: -4341209307699571989
+      flag animation_2: 4625237377173308275
+      flag animation_3: -455622095734552585
+      flag animation_4: 6712714840332784938
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

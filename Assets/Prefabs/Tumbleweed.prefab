@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1181435741604665851}
   - component: {fileID: 2616402971551842773}
   - component: {fileID: 6209611658060462040}
+  - component: {fileID: -8661887333928915314}
   m_Layer: 7
   m_Name: Tumbleweed
   m_TagString: Enemy
@@ -132,6 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e783c3b98a4e834090892f77e793bf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  health: 0
   baseSpeed: 3
   speedVariance: 1
   rotationMultiplier: 10
@@ -175,3 +177,16 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 1.1
+--- !u!114 &-8661887333928915314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7573787010870594818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 912198e2f974c604d8385b50d4381471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyBase
+  health: 10
