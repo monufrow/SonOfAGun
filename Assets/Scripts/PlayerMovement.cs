@@ -83,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private bool IsGrounded()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 1f, groundLayer);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 3f, groundLayer);
         return hit.collider != null;
     }
     void OnAttack()
@@ -132,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
     }
     IEnumerator HitEffect()
     {
-        LoseLife();
+        //LoseLife();
         spriteRenderer.color = Color.red;
         yield return new WaitForSeconds(0.2f);
         spriteRenderer.color = Color.white;
@@ -170,7 +170,7 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator ReloadCoroutine()
     {
-        reloadCircle.gameObject.SetActive(true);
+        /*reloadCircle.gameObject.SetActive(true);
         reloadCircle.fillAmount = 0f;
         float elapsed = 0f;
         while (elapsed < reloadTime)
@@ -179,8 +179,9 @@ public class PlayerMovement : MonoBehaviour
             reloadCircle.fillAmount = elapsed / reloadTime;
             yield return null;
         }
-        reloadCircle.fillAmount = 0f;
-        yield return null;
+        reloadCircle.fillAmount = 0f;*/
+        // yield return null
+        yield return new WaitForSeconds(reloadTime); //delete after implimenting reload circle
         isReloading = false;
     }
 
