@@ -156,7 +156,7 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator ReloadCoroutine()
     {
         isReloading = true;
-        reloadCircle.gameObject.SetActive(true);
+        /*reloadCircle.gameObject.SetActive(true);
         reloadCircle.fillAmount = 0f;
         float elapsed = 0f;
         while (elapsed < reloadTime)
