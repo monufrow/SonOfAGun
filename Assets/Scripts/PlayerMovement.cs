@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     
     private int layerToIgnore;
     private Animator animator;
+    private bool isCrouched = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -70,19 +71,33 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity = targetVelocity;
         }
         animator.SetFloat("XVelo", Mathf.Abs(rb.linearVelocity.x));
-        animator.SetFloat("YVelo", Mathf.Abs(rb.linearVelocity.y));
+        animator.SetFloat("YVelo", rb.linearVelocity.y);
+        animator.SetBool("isGrounded",IsGrounded());
+        animator.SetBool("isCrouched",isCrouched);
     }
     void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
     }
-    void OnJump()
+    void OnJump(InputValue value)
     {
-        if (IsGrounded())
+        if (value.isPressed)
         {
-            rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+            if (IsGrounded())
+                isCrouched = true;
+        }
+        else
+        {
+            if (isCrouched)  // don't check grounded again
+            {
+                rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            }
+
+            isCrouched = false;
         }
     }
+
+
     private bool IsGrounded()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, playerHeight, groundLayer);
