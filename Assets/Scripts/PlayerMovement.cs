@@ -15,12 +15,14 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     Vector3 mouseWorldPos;
     Vector2 mouseScreenPos;
+    public SpriteRenderer spriteRenderer;
+    private bool facingRight = true;
     public GameObject crosshair;
     [SerializeField] private Material playerMaterial;
-    SpriteRenderer spriteRenderer;
     public float shotDistance = 6f;
     public int bulletCount = 3;
     public float reloadTime = 2f;
+    private float horizontalInput;
     private bool isReloading = false;
     private Vector2 moveInput;
     public Image reloadCircle;
@@ -74,6 +76,26 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("YVelo", rb.linearVelocity.y);
         animator.SetBool("isGrounded",IsGrounded());
         animator.SetBool("isCrouched",isCrouched);
+    }
+
+    void FixedUpdate()
+    {
+        // ... (your movement physics here) ...
+
+        // Flip the sprite based on input direction
+        if (rb.linearVelocityX < 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+        if (rb.linearVelocityX > 0)
+        {
+            spriteRenderer.flipX = false;
+        }
+    }
+    void Flip()
+    {
+        facingRight = !facingRight;
+        spriteRenderer.flipX = !spriteRenderer.flipX;
     }
     void OnMove(InputValue value)
     {
