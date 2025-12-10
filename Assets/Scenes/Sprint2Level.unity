@@ -2633,6 +2633,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2574581545616863, guid: 06a69e82a0a2a7c488a72cdbc2145814, type: 3}
+      propertyPath: orthographic size
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 339201052415329621, guid: 06a69e82a0a2a7c488a72cdbc2145814, type: 3}
       propertyPath: WinCanvas
       value: 
@@ -2680,6 +2684,22 @@ PrefabInstance:
     - target: {fileID: 2818915219681648742, guid: 06a69e82a0a2a7c488a72cdbc2145814, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2935761232478861288, guid: 06a69e82a0a2a7c488a72cdbc2145814, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3183688186702689181, guid: 06a69e82a0a2a7c488a72cdbc2145814, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4763733645150143290, guid: 06a69e82a0a2a7c488a72cdbc2145814, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7337461305273663178, guid: 06a69e82a0a2a7c488a72cdbc2145814, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7518945690513573615, guid: 06a69e82a0a2a7c488a72cdbc2145814, type: 3}
       propertyPath: m_Name
