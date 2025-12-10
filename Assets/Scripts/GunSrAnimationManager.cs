@@ -19,11 +19,13 @@ public class GunSrAnimationManager : MonoBehaviour
         if (rb.linearVelocityX < 0)
         {
             spriteRenderer.flipX = true;
+            spriteRenderer.flipY = true;
             transform.localPosition = new Vector3(-0.575f, 0.125f, -0.001f); //flipped
         }
         if (rb.linearVelocityX > 0)
         {
             spriteRenderer.flipX = false;
+            spriteRenderer.flipY = false;
             transform.localPosition = new Vector3(0.575f, 0.125f, -0.001f);
         }
     }

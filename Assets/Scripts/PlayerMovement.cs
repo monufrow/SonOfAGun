@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     
     private int layerToIgnore;
     private Animator animator;
+    private Animator gunAnimator;
     private bool isCrouched = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -40,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        gunAnimator = gun.GetComponent<Animator>();
         playerMaterial = GetComponent<SpriteRenderer>().material;
         spriteRenderer = GetComponent<SpriteRenderer>();
         startPosition = transform.position;
@@ -77,25 +79,25 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("YVelo", rb.linearVelocity.y);
         animator.SetBool("isGrounded",IsGrounded());
         animator.SetBool("isCrouched",isCrouched);
+        gunAnimator.SetBool("IsReloading",isReloading);
     }
 
     void FixedUpdate()
     {
-        // ... (your movement physics here) ...
-
         // Flip the sprite based on input direction
         if (rb.linearVelocityX < 0)
-        {
             spriteRenderer.flipX = true;
-        }
-        if (rb.linearVelocityX > 0)
-        {
+        else if (rb.linearVelocityX > 0)
             spriteRenderer.flipX = false;
-        }
 
         Vector3 direction = (mouseWorldPos - transform.position).normalized;
-        Vector3 spreadDirection = Quaternion.AngleAxis(Random.Range(-10, 11), Vector3.forward) * direction;
-        gun.transform.rotation = Quaternion.LookRotation(Vector3.forward, spreadDirection);
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        // If the sprite is flipped, rotate gun 180° around Y and invert the angle
+        if (spriteRenderer.flipX)
+            gun.transform.rotation = Quaternion.Euler(0, 180f, -angle);
+        else
+            gun.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
     void Flip()
     {
