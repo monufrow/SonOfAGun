@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     
     private int layerToIgnore;
     private Animator animator;
+    public GameObject WinCanvas;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -188,6 +189,9 @@ public class PlayerMovement : MonoBehaviour
         }else if (collision.gameObject.CompareTag("Goal"))
         {
             Debug.Log("Player reached the goal!");
+            //freeze game
+            Time.timeScale = 0f;
+            WinCanvas.SetActive(true);
             //GameManager.Instance.LevelComplete();
         }
     }
