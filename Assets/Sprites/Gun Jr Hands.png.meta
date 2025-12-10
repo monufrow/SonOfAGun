@@ -14,9 +14,6 @@ TextureImporter:
   - first:
       213: 3844517454987364631
     second: Gun Jr Hands_3
-  - first:
-      213: 2261443749468469776
-    second: Gun Jr Hands_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -63,7 +60,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 20
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -128,12 +125,12 @@ TextureImporter:
       name: Gun Jr Hands_0
       rect:
         serializedVersion: 2
-        x: 8
-        y: 89
-        width: 38
-        height: 9
+        x: 0
+        y: 48
+        width: 36
+        height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -150,12 +147,12 @@ TextureImporter:
       name: Gun Jr Hands_1
       rect:
         serializedVersion: 2
-        x: 59
-        y: 88
+        x: 0
+        y: 32
         width: 36
-        height: 18
+        height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -172,12 +169,12 @@ TextureImporter:
       name: Gun Jr Hands_2
       rect:
         serializedVersion: 2
-        x: 109
-        y: 88
+        x: 0
+        y: 16
         width: 36
-        height: 18
+        height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -194,12 +191,12 @@ TextureImporter:
       name: Gun Jr Hands_3
       rect:
         serializedVersion: 2
-        x: 9
-        y: 25
+        x: 0
+        y: 0
         width: 36
-        height: 18
+        height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -212,33 +209,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: Gun Jr Hands_4
-      rect:
-        serializedVersion: 2
-        x: 56
-        y: 26
-        width: 40
-        height: 19
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 01a7896cb13426f10800000000000000
-      internalID: 2261443749468469776
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 7d09fd59dcfbc0c47af58bbd5441d1c5
     internalID: 0
     vertices: []
     indices: 
@@ -246,13 +221,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":4.0},"gridSpriteSize":{"x":36.0,"y":16.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       Gun Jr Hands_0: -7304824257729005598
       Gun Jr Hands_1: 1798302940933644464
       Gun Jr Hands_2: 6897325302389109484
       Gun Jr Hands_3: 3844517454987364631
-      Gun Jr Hands_4: 2261443749468469776
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

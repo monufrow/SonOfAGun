@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     public float reloadTime = 2f;
     private float horizontalInput;
     private bool isReloading = false;
+    public GameObject gun;
     private Vector2 moveInput;
     public Image reloadCircle;
     public int lives = 3;
@@ -91,6 +92,10 @@ public class PlayerMovement : MonoBehaviour
         {
             spriteRenderer.flipX = false;
         }
+
+        Vector3 direction = (mouseWorldPos - transform.position).normalized;
+        Vector3 spreadDirection = Quaternion.AngleAxis(Random.Range(-10, 11), Vector3.forward) * direction;
+        gun.transform.rotation = Quaternion.LookRotation(Vector3.forward, spreadDirection);
     }
     void Flip()
     {
