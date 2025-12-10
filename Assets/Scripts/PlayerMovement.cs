@@ -15,12 +15,14 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     Vector3 mouseWorldPos;
     Vector2 mouseScreenPos;
+    public SpriteRenderer spriteRenderer;
+    private bool facingRight = true;
     public GameObject crosshair;
     [SerializeField] private Material playerMaterial;
-    SpriteRenderer spriteRenderer;
     public float shotDistance = 6f;
     public int bulletCount = 3;
     public float reloadTime = 2f;
+    private float horizontalInput;
     private bool isReloading = false;
     private Vector2 moveInput;
     public Image reloadCircle;
@@ -31,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     private int layerToIgnore;
     private Animator animator;
     public GameObject WinCanvas;
+    private bool isCrouched = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -71,19 +74,53 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity = targetVelocity;
         }
         animator.SetFloat("XVelo", Mathf.Abs(rb.linearVelocity.x));
-        animator.SetFloat("YVelo", Mathf.Abs(rb.linearVelocity.y));
+        animator.SetFloat("YVelo", rb.linearVelocity.y);
+        animator.SetBool("isGrounded",IsGrounded());
+        animator.SetBool("isCrouched",isCrouched);
+    }
+
+    void FixedUpdate()
+    {
+        // ... (your movement physics here) ...
+
+        // Flip the sprite based on input direction
+        if (rb.linearVelocityX < 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+        if (rb.linearVelocityX > 0)
+        {
+            spriteRenderer.flipX = false;
+        }
+    }
+    void Flip()
+    {
+        facingRight = !facingRight;
+        spriteRenderer.flipX = !spriteRenderer.flipX;
     }
     void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
     }
-    void OnJump()
+    void OnJump(InputValue value)
     {
-        if (IsGrounded())
+        if (value.isPressed)
         {
-            rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+            if (IsGrounded())
+                isCrouched = true;
+        }
+        else
+        {
+            if (isCrouched)  // don't check grounded again
+            {
+                rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            }
+
+            isCrouched = false;
         }
     }
+
+
     private bool IsGrounded()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, playerHeight, groundLayer);
