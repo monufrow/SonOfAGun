@@ -35,8 +35,12 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     private Animator gunAnimator;
     public GameObject WinCanvas;
+    public GameObject loseCanvas;
     private bool isCrouched = false;
     [SerializeField] private Canvas winCanvas;
+    public SettingsMenu soundManager;
+    public bool deathSongPlaying = false;
+    public GameObject mainMusic;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -122,6 +126,8 @@ public class PlayerMovement : MonoBehaviour
             if (isCrouched)  // don't check grounded again
             {
                 rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+                soundManager.PlaySFX(soundManager.jump);
+
             }
 
             isCrouched = false;
@@ -160,6 +166,7 @@ public class PlayerMovement : MonoBehaviour
 
     void ShootBullets(Vector3 bulletDrection)
     {
+        soundManager.PlaySFX(soundManager.gunshot);
         //Debug.Log("Shooting bullets");
         for (int i = 0; i < bulletCount; i++)
         {
@@ -210,6 +217,7 @@ public class PlayerMovement : MonoBehaviour
             reloadCircle.fillAmount = elapsed / reloadTime;
             yield return null;
         }
+        soundManager.PlaySFX(soundManager.reload);
         reloadCircle.fillAmount = 0f;
         yield return null;
         isReloading = false;
@@ -238,6 +246,8 @@ public class PlayerMovement : MonoBehaviour
             Time.timeScale = 0f;
             //show win canvas
             WinCanvas.SetActive(true);
+            soundManager.PlaySFX(soundManager.winMusic);
+            mainMusic.SetActive(false);
         }
     }
     IEnumerator HitEffect()
@@ -250,6 +260,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void LoseLife()
     {
+        soundManager.PlaySFX(soundManager.hurt);
         lives--;
         GameManager.Instance.LoseLife();
         //Debug.Log("Player lost a life!");
@@ -261,8 +272,24 @@ public class PlayerMovement : MonoBehaviour
     }
     void Respawn()
     {
+        loseCanvas.SetActive(true);
+        if (!deathSongPlaying)
+        {
+            mainMusic.SetActive(false);
+            soundManager.PlaySFX(soundManager.deathMusic);
+            deathSongPlaying = true;
+        }
+        StartCoroutine(RespawnProcess());
+    }
+
+    public IEnumerator RespawnProcess()
+    {
+        yield return new WaitForSeconds(6f);
+        loseCanvas.SetActive(false);
         transform.position = startPosition;
         lives = 3;
         GameManager.Instance.RestoreLives();
+        mainMusic.SetActive(true);
+        deathSongPlaying = false;
     }
 }

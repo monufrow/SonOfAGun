@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class ScorpionBehavior : EnemyBase
 {
@@ -20,6 +22,7 @@ public class ScorpionBehavior : EnemyBase
     private Animator animator;
     private BoxCollider2D objectCollider;
     private bool takingDamage = false;
+    public SettingsMenu soundManager;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -70,9 +73,11 @@ public class ScorpionBehavior : EnemyBase
         //scale.x *= -1;
         //transform.localScale = scale;
         spriteRenderer.flipX = !spriteRenderer.flipX;   
+        soundManager.PlaySFX(soundManager.scorpionNoises);
     }
     IEnumerator Charge()
     {
+        soundManager.PlaySFX(soundManager.scorpionCharge);
         isCharging = true;
         canCharge = false;
 
