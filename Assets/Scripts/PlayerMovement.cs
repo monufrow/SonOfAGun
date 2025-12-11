@@ -34,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
     private int layerToIgnore;
     private Animator animator;
     private Animator gunAnimator;
+    public GameObject WinCanvas;
     private bool isCrouched = false;
     [SerializeField] private Canvas winCanvas;
 
@@ -236,7 +237,7 @@ public class PlayerMovement : MonoBehaviour
             //freeze game
             Time.timeScale = 0f;
             //show win canvas
-            winCanvas.gameObject.SetActive(true);
+            WinCanvas.SetActive(true);
         }
     }
     IEnumerator HitEffect()
