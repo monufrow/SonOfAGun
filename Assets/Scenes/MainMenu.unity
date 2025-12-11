@@ -1030,7 +1030,6 @@ GameObject:
   - component: {fileID: 604373037}
   - component: {fileID: 604373036}
   - component: {fileID: 604373042}
-  - component: {fileID: 604373043}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1160,13 +1159,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80b6eda1c48c64862bd769992d01ad18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenu
---- !u!114 &604373043
+--- !u!1 &701708262
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 701708264}
+  - component: {fileID: 701708263}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &701708263
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 604373035}
+  m_GameObject: {fileID: 701708262}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 27a4f3a2941b54797b90623e14145de4, type: 3}
@@ -1176,6 +1192,25 @@ MonoBehaviour:
   musicVol: {fileID: 0}
   sfxVol: {fileID: 0}
   audioMixer: {fileID: 24100000, guid: 590e2f3488b124eb4a0b9535d8243384, type: 2}
+  hurt: {fileID: 0}
+  jump: {fileID: 0}
+  deathSound: {fileID: 0}
+  deathMusic: {fileID: 0}
+--- !u!4 &701708264
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 701708262}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -14.83377, y: 5.35604, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &721650317
 GameObject:
   m_ObjectHideFlags: 0
@@ -1861,6 +1896,10 @@ MonoBehaviour:
   musicVol: {fileID: 934224917}
   sfxVol: {fileID: 270456653}
   audioMixer: {fileID: 24100000, guid: 590e2f3488b124eb4a0b9535d8243384, type: 2}
+  hurt: {fileID: 0}
+  jump: {fileID: 0}
+  deathSound: {fileID: 0}
+  deathMusic: {fileID: 0}
 --- !u!1 &1039300091
 GameObject:
   m_ObjectHideFlags: 0
@@ -3783,3 +3822,4 @@ SceneRoots:
   - {fileID: 1763446220}
   - {fileID: 995548676}
   - {fileID: 1629166186}
+  - {fileID: 701708264}
