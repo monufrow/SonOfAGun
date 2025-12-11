@@ -161,7 +161,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.8, y: 0.57}
+    oldSize: {x: 0.78, y: 0.55}
     newSize: {x: 0.8, y: 0.57}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -178,18 +178,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 7537181822173416548}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b47df0c8f856b1149988dbee6f7dfd06, type: 3}
+  m_Script: {fileID: 11500000, guid: 02665ce6bf762465cb25b39ed5130d04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  health: 10
+  health: 30
   patrolRange: 5
   patrolSpeed: 2
-  chargeSpeed: 7
+  chargeSpeed: 4
   detectionRange: 5
   chargeCooldown: 3
   playerLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
 --- !u!95 &3540649790348825796
 Animator:
   serializedVersion: 7
@@ -263,7 +263,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.8, y: 0.57}
+    oldSize: {x: 0.78, y: 0.55}
     newSize: {x: 0.8, y: 0.57}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
