@@ -35,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     private Animator gunAnimator;
     private bool isCrouched = false;
+    [SerializeField] private Canvas winCanvas;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -232,7 +233,10 @@ public class PlayerMovement : MonoBehaviour
         }else if (collision.gameObject.CompareTag("Goal"))
         {
             Debug.Log("Player reached the goal!");
-            //GameManager.Instance.LevelComplete();
+            //freeze game
+            Time.timeScale = 0f;
+            //show win canvas
+            winCanvas.gameObject.SetActive(true);
         }
     }
     IEnumerator HitEffect()
