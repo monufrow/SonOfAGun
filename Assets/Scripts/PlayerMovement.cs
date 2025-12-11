@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     Vector3 mouseWorldPos;
     Vector2 mouseScreenPos;
-    public SpriteRenderer spriteRenderer;
+    private SpriteRenderer spriteRenderer;
     private bool facingRight = true;
     public GameObject crosshair;
     [SerializeField] private Material playerMaterial;
