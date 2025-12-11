@@ -127,6 +127,7 @@ public class ScorpionBehavior : EnemyBase
     {
         animator.SetTrigger("Die");
         rb.gravityScale = 0f;
+        rb.linearVelocity = Vector2.zero;
         Destroy(objectCollider);
         Destroy(gameObject, 4f);
     }
